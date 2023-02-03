@@ -1,2 +1,6 @@
 # Project exclude paths
 /venv/
+/database/config.ini
+/runChiri.bat
+/values/
+/util/invite.txt
