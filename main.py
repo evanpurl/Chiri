@@ -16,7 +16,7 @@ client = commands.Bot(command_prefix="$", intents=intents)
 async def main():
     async with client:
         try:
-            token = await gettoken("Chiri")
+            token = await gettoken("chiri")
             await connect()
             await load_extensions(client)
             await client.start(token[0])

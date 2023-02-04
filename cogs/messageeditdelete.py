@@ -1,7 +1,7 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-from util.filesetget import fileget, fileset
+from util.dbsetget import dbset, dbget
 
 
 class messagefunctions(commands.Cog):
@@ -14,7 +14,7 @@ class messagefunctions(commands.Cog):
     @app_commands.checks.has_permissions(manage_messages=True)
     async def setmessagechannel(self, interaction: discord.Interaction, channel: discord.TextChannel) -> None:
         try:
-            await fileset("messagechannel", channel.id, interaction.guild.id)
+            await dbset(interaction.guild.id, self.bot.user.name, "messagechannelid", channel.id)
             await interaction.response.send_message(content=f"Message channel set to {channel}.", ephemeral=True)
         except Exception as e:
             print(e)
@@ -23,14 +23,14 @@ class messagefunctions(commands.Cog):
     async def on_message_delete(self, message: discord.Message):
         try:
             if len(message.content) <= 1500:
-                msgchnl = await fileget("messagechannel", message.guild.id)
+                msgchnl = await dbget(message.guild.id, self.bot.user.name, "messagechannelid")
                 if msgchnl:
-                    channel = discord.utils.get(message.guild.channels, id=int(msgchnl))
+                    channel = discord.utils.get(message.guild.channels, id=msgchnl[0])
                     await channel.send(f"Message from {message.author.name} in channel {message.channel.mention} deleted: {message.content}")
             else:
-                msgchnl = await fileget("messagechannel", message.guild.id)
+                msgchnl = await dbget(message.guild.id, self.bot.user.name, "messagechannelid")
                 if msgchnl:
-                    channel = discord.utils.get(message.guild.channels, id=int(msgchnl))
+                    channel = discord.utils.get(message.guild.channels, id=msgchnl[0])
                     await channel.send(
                          f"Message from {message.author.name} in channel {message.channel.mention} deleted: content too long to send.")
         except Exception as e:
@@ -41,14 +41,14 @@ class messagefunctions(commands.Cog):
         try:
             msgsum = sum([len(message_before.content), len(message_after.content)])
             if msgsum <= 1500:
-                msgchnl = await fileget("messagechannel", message_before.guild.id)
+                msgchnl = await dbget(message_before.guild.id, self.bot.user.name, "messagechannelid")
                 if msgchnl:
-                    channel = discord.utils.get(message_before.guild.channels, id=int(msgchnl))
+                    channel = discord.utils.get(message_before.guild.channels, id=msgchnl[0])
                     await channel.send(f"Message from {message_before.author.name} in channel {message_before.channel.mention} edited from {message_before.content} to {message_after.content}")
             else:
-                msgchnl = await fileget("messagechannel", message_before.guild.id)
+                msgchnl = await dbget(message_before.guild.id, self.bot.user.name, "messagechannelid")
                 if msgchnl:
-                    channel = discord.utils.get(message_before.guild.channels, id=int(msgchnl))
+                    channel = discord.utils.get(message_before.guild.channels, id=msgchnl[0])
                     await channel.send(
                         f"Message from {message_before.author.name} in channel {message_before.channel.mention} edited: content too long to send.")
         except Exception as e:
