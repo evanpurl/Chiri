@@ -24,13 +24,13 @@ class messagefunctions(commands.Cog):
         try:
             if len(message.content) <= 1500:
                 msgchnl = await dbget(message.guild.id, self.bot.user.name, "messagechannelid")
-                if msgchnl:
-                    channel = discord.utils.get(message.guild.channels, id=msgchnl[0])
+                channel = discord.utils.get(message.guild.channels, id=msgchnl[0])
+                if channel:
                     await channel.send(f"Message from {message.author.name} in channel {message.channel.mention} deleted: {message.content}")
             else:
                 msgchnl = await dbget(message.guild.id, self.bot.user.name, "messagechannelid")
-                if msgchnl:
-                    channel = discord.utils.get(message.guild.channels, id=msgchnl[0])
+                channel = discord.utils.get(message.guild.channels, id=msgchnl[0])
+                if channel:
                     await channel.send(
                          f"Message from {message.author.name} in channel {message.channel.mention} deleted: content too long to send.")
         except Exception as e:
@@ -42,13 +42,13 @@ class messagefunctions(commands.Cog):
             msgsum = sum([len(message_before.content), len(message_after.content)])
             if msgsum <= 1500:
                 msgchnl = await dbget(message_before.guild.id, self.bot.user.name, "messagechannelid")
-                if msgchnl:
-                    channel = discord.utils.get(message_before.guild.channels, id=msgchnl[0])
+                channel = discord.utils.get(message_before.guild.channels, id=msgchnl[0])
+                if channel:
                     await channel.send(f"Message from {message_before.author.name} in channel {message_before.channel.mention} edited from {message_before.content} to {message_after.content}")
             else:
                 msgchnl = await dbget(message_before.guild.id, self.bot.user.name, "messagechannelid")
-                if msgchnl:
-                    channel = discord.utils.get(message_before.guild.channels, id=msgchnl[0])
+                channel = discord.utils.get(message_before.guild.channels, id=msgchnl[0])
+                if channel:
                     await channel.send(
                         f"Message from {message_before.author.name} in channel {message_before.channel.mention} edited: content too long to send.")
         except Exception as e:
