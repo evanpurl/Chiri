@@ -1,17 +1,8 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-from discord.ext.commands import MissingPermissions
-import datetime
 
 from util.dbsetget import dbset
-
-def cmdembed(bot, cmd, text):
-    embed = discord.Embed(title=f"**{cmd} command**",
-                          description=f"{text}",
-                          color=discord.Color.blue(), timestamp=datetime.datetime.now())
-    embed.set_author(name=bot.user.name, icon_url=bot.user.avatar)
-    return embed
 
 
 class setcmd(commands.GroupCog, name="set"):
