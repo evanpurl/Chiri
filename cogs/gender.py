@@ -17,15 +17,20 @@ class gendercmd(commands.Cog):
         app_commands.Choice(name='Something Else', value=4),
     ])
     async def gender(self, interaction: discord.Interaction, genders: app_commands.Choice[int]) -> None:
-        role = discord.utils.get(interaction.guild.roles, name=genders.name)
-        if not role:
-            await interaction.guild.create_role(name=genders.name)
-        role = discord.utils.get(interaction.guild.roles, name=genders.name)
-        if role:
-            await interaction.user.add_roles(role)
-            await interaction.response.send_message(f"You have been added to the {genders.name} role.", ephemeral=True)
-        else:
-            await interaction.response.send_message(f"This bot cannot run this function at this time.", ephemeral=True)
+        try:
+            role = discord.utils.get(interaction.guild.roles, name=genders.name)
+            if not role:
+                await interaction.guild.create_role(name=genders.name)
+            role = discord.utils.get(interaction.guild.roles, name=genders.name)
+            if role:
+                await interaction.user.add_roles(role)
+                await interaction.response.send_message(f"You have been added to the {genders.name} role.", ephemeral=True)
+            else:
+                await interaction.response.send_message(f"This bot cannot run this function at this time.", ephemeral=True)
+        except discord.Forbidden:
+            await interaction.response.send_message(
+                content=f"""Unable to set your role, make sure my role is higher than the role you're trying to add!""",
+                ephemeral=True)
 
 
 async def setup(bot):

@@ -48,8 +48,10 @@ class dmcmd(commands.Cog):
             # End of check
             await interaction.user.add_roles(role)
             await interaction.response.send_message(f"You have been added to the {statuses.name} role.", ephemeral=True)
-        except Exception as e:
-            print(e)
+        except discord.Forbidden:
+            await interaction.response.send_message(
+                content=f"""Unable to set your role, make sure my role is higher than the role you're trying to add!""",
+                ephemeral=True)
 
 
 async def setup(bot):

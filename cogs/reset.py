@@ -32,6 +32,9 @@ class resetcmd(commands.Cog):
         elif config.value == 4:
             await dbset(interaction.guild.id, self.bot.user.name, "verifiedroleid", 0)
             await interaction.response.send_message(f"Verified Role config has been reset.", ephemeral=True)
+        elif config.value == 5:
+            await dbset(interaction.guild.id, self.bot.user.name, "messagechannelid", 0)
+            await interaction.response.send_message(f"Message Log Channel config has been reset.", ephemeral=True)
 
     @reset.error
     async def reseterror(self, interaction: discord.Interaction, error: app_commands.AppCommandError):

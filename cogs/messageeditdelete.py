@@ -9,16 +9,6 @@ class messagefunctions(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="setmessagechannel",
-                          description="Command used by a moderator or admin set the message channel")
-    @app_commands.checks.has_permissions(manage_messages=True)
-    async def setmessagechannel(self, interaction: discord.Interaction, channel: discord.TextChannel) -> None:
-        try:
-            await dbset(interaction.guild.id, self.bot.user.name, "messagechannelid", channel.id)
-            await interaction.response.send_message(content=f"Message channel set to {channel}.", ephemeral=True)
-        except Exception as e:
-            print(e)
-
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message):
         try:
