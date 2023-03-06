@@ -18,6 +18,7 @@ class resetcmd(commands.Cog):
         app_commands.Choice(name='Default Role', value=2),
         app_commands.Choice(name='Ping Role', value=3),
         app_commands.Choice(name='Verified Role', value=4),
+        app_commands.Choice(name='Message Channel', value=5),
     ])
     async def reset(self, interaction: discord.Interaction, config: app_commands.Choice[int]) -> None:
         if config.value == 1:
