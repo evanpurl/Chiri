@@ -2,7 +2,7 @@ from discord.ext import commands
 from util.accessutils import whohasaccess
 
 
-class ccommands(commands.Cog):
+class bcommands(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -19,5 +19,6 @@ class ccommands(commands.Cog):
             else:
                 await ctx.send(f"You can't run this command.")
 
+
 async def setup(bot):
-    await bot.add_cog(ccommands(bot))
+    await bot.add_cog(bcommands(bot))
