@@ -3,7 +3,7 @@ from discord import app_commands
 from discord.ext import commands
 
 
-class punchcmd(commands.Cog):
+class clapcmd(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -25,4 +25,4 @@ class punchcmd(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(punchcmd(bot))
+    await bot.add_cog(clapcmd(bot))
