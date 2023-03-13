@@ -1,5 +1,4 @@
 import discord
-import datetime
 from discord import app_commands
 from discord.ext import commands
 from util.dbsetget import dbget, dbset
@@ -10,7 +9,8 @@ from util.dbsetget import dbget, dbset
 
 def verifymessageembed(server):
     embed = discord.Embed(title=f"**{server.name} Verification Process**",
-                          description=f"This server requires you to verify that you're a human. To do so, click the Verify button below.",
+                          description=f"This server requires you to verify that you're a human. To do so, click the "
+                                      f"Verify button below.",
                           color=discord.Color.blue())
     return embed
 
@@ -21,7 +21,7 @@ class Verifybuttonpanel(discord.ui.View):
         super().__init__(timeout=None)
 
     @discord.ui.button(label="Verify", emoji="✅", style=discord.ButtonStyle.green,
-                       custom_id="Chiri:close")
+                       custom_id="Chiri:verify")
     async def verify_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
             verrole = await dbget(interaction.guild.id, interaction.client.user.name, "verifiedroleid")
@@ -30,10 +30,6 @@ class Verifybuttonpanel(discord.ui.View):
                 if role in interaction.user.roles:
                     await interaction.response.send_message(f"You have already been verified.", ephemeral=True)
                 else:
-                    unverrole = await dbget(interaction.guild.id, interaction.client.user.name, "defaultroleid")
-                    if unverrole:
-                        oldrole = discord.utils.get(interaction.guild.roles, id=unverrole[0])
-                        await interaction.user.remove_roles(oldrole)
                     await interaction.user.add_roles(role)
                     await interaction.response.send_message(f"You have been added to the Verified role.",
                                                             ephemeral=True)
@@ -70,10 +66,7 @@ class verification(commands.Cog):
                 if role in user.roles:
                     await interaction.response.send_message(f"User has already been verified.", ephemeral=True)
                 else:
-                    unverrole = await dbget(interaction.guild.id, self.bot.user.name, "defaultroleid")
-                    oldrole = discord.utils.get(interaction.guild.roles, id=unverrole[0])
                     await user.add_roles(role)
-                    await user.remove_roles(oldrole)
                     await interaction.response.send_message(f"User has been added to the Verified role.",
                                                             ephemeral=True)
             else:
