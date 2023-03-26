@@ -37,7 +37,7 @@ async def main():
             token = await gettoken("chiri")
             await connect()
             await load_extensions(client)
-            await client.run(token[0])
+            await client.start(token[0])
         except KeyboardInterrupt:
             pass
 
