@@ -17,7 +17,7 @@ handler = logging.FileHandler(filename='chiri.log', encoding='utf-8', mode='w')
 
 # Main function to load extensions and then load bot.
 
-async with client:
+with client:
     try:
         token = await gettoken("chiri")
         await connect()
