@@ -16,15 +16,12 @@ handler = logging.FileHandler(filename='chiri.log', encoding='utf-8', mode='w')
 
 
 # Main function to load extensions and then load bot.
-async def main():
-    async with client:
-        try:
-            token = await gettoken("chiri")
-            await connect()
-            await load_extensions(client)
-            await client.run(token[0], log_handler=handler, log_level=logging.DEBUG)
-        except KeyboardInterrupt:
-            pass
 
-
-asyncio.run(main())  # Runs main function above
+async with client:
+    try:
+        token = await gettoken("chiri")
+        await connect()
+        await load_extensions(client)
+        await client.run(token[0], log_handler=handler, log_level=logging.DEBUG)
+    except KeyboardInterrupt:
+        pass
